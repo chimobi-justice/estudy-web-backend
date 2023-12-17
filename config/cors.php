@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*', 'https://estudy.onrender.com'],
+    'allowed_origins' => ['*', 'localhost:3000', 'https://estudy.onrender.com'],
 
     'allowed_origins_patterns' => [],
 
