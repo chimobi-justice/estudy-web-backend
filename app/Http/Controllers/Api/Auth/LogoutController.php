@@ -2,20 +2,28 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 class LogoutController extends Controller
 {
     public function logout(){
-        if (EnsureFrontendRequestsAreStateful::fromFrontend(request())) {
-            Auth::guard('web')->logout();
+        Auth::guard('api')->logout();
+            
+        $this->refresh();
+    }
 
-            request()->session()->invalidate();
+    public function refresh() {
+        return $this->respondWithToken(auth()->refresh());
+    }
 
-            request()->session()->regenerateToken(); // session
-        }
+    protected function respondWithToken($token): JsonResponse {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
+        ]);
     }
 }
