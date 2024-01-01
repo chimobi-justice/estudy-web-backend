@@ -2,62 +2,58 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\LoginResource;;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\Events\Lockout;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\LoginResource;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
-
 
 class LoginController extends Controller
 {
     public function login(Request $request) {
         $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string',
+            'email' => 'required',
+            'password' => 'required'
         ]);
 
-        if (EnsureFrontendRequestsAreStateful::fromFrontend(request())) {
-            $this->anthenticateFrontend();
+        $credentials = request(['email', 'password']);
+
+        $this->anthenticateFrontend();
+
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json([
+                'message' => 'Inavlid Email Address or Password'
+            ], 400);
         }
 
-        $user = User::where('email', $request->email)->first();
+        return $this->respondWithToken($token);
+    }
 
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response([
-                'message' => __('auth.failed')
-            ], 422);
-        }
+    protected function respondWithToken($token): JsonResponse {
+        $user = auth()->user()->role;
 
-        Auth::guard('web')->login($user);
-
-        return new LoginResource($user);
+        return response()->json([
+            'message' => 'Login successfully',
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'user_type' => $user
+        ]);
     }
 
     private function anthenticateFrontend() {
         $this->ensureIsNotRateLimited();
-
-        if (!Auth::guard('web')->attempt(request()->only('email', 'password'), request()->filled('remember'))) {
-            RateLimiter::hit($this->throttleKey());
-
-            throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
-            ]);
-        }
-
-        RateLimiter::clear($this->throttleKey());
     }
 
 
-    public function ensureIsNotRateLimited()
-    {
+    public function ensureIsNotRateLimited(): void {
         if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
@@ -79,8 +75,7 @@ class LoginController extends Controller
      *
      * @return string
      */
-    public function throttleKey()
-    {
+    public function throttleKey(): string {
         return Str::lower(request('email')).'|'.request()->ip();
     }
 }
