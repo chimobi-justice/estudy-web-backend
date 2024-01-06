@@ -16,7 +16,10 @@ use App\Http\Controllers\Api\Courses\Mentor\GetMyCourseController;
 use App\Http\Controllers\Api\Courses\Mentor\CreateCourseController;
 use App\Http\Controllers\Api\Courses\Mentor\DeleteCourseController;
 use App\Http\Controllers\Api\Courses\Mentor\UpdateCourseController;
+use App\Http\Controllers\Api\Courses\Student\EnrollCourseController;
+use App\Http\Controllers\Api\Courses\Student\UnEnrollCourseController;
 use App\Http\Controllers\Api\Courses\Mentor\GetUpdatedCourseController;
+use App\Http\Controllers\Api\Courses\Student\AllEnrollCourseController;
 use App\Http\Controllers\Api\Courses\Mentor\VideoCourseUploadController;
 use App\Http\Controllers\Api\Courses\Mentor\ThumbnailCourseUploadController;
 
@@ -37,15 +40,16 @@ Route::group(['middleware' => 'auth:api'], function() {
             Route::post('/thumbnail', [ThumbnailCourseUploadController::class, 'thumbnailUplaod']);
             Route::post('/video', [VideoCourseUploadController::class, 'videoUpload']);
 
-
             Route::get('/{course}', [GetUpdatedCourseController::class, 'getUpdateCourse']);
-
-            
         });
 
         Route::group(['prefix' => 's'], function() {
             Route::get('/all', [AllCourseController::class, 'allCourse']);
             Route::get('/{course}', [GetCourseController::class, 'getCourse']);
+            Route::post('/user/{course}/enroll', [EnrollCourseController::class, 'enrollCourse']);
+            Route::post('/user/{course}/unenroll', [UnEnrollCourseController::class, 'unEnrollCoures']);
+
+            Route::get('/user/enroll-courses', [AllEnrollCourseController::class, 'allCourseEnrolled']);
         });
     });
 });

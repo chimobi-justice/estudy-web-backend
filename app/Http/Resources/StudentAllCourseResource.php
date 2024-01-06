@@ -3,7 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\CourseProfileResourse;
+use App\Http\Resources\CourseEnrollResource;
+use App\Http\Resources\CourseProfileResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class StudentAllCourseResource extends JsonResource
@@ -20,7 +21,11 @@ class StudentAllCourseResource extends JsonResource
             'name' => $this->name,
             'thumbnail' => $this->thumbnail,
             'price' => $this->price,
-            'profile' => new CourseProfileResourse($this->whenLoaded('user')),
+            'profile' => new CourseProfileResource($this->whenLoaded('user')),
+            'isEnrolled' => $this->whenLoaded('courseEnroll', function () {
+                return $this->courseEnroll->contains('user_id', auth()->id());
+            }),
+            'courseEnroll' => CourseEnrollResource::collection($this->whenLoaded('courseEnroll')),
         ];
     }
 }
