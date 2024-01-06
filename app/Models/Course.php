@@ -30,5 +30,5 @@ class Course extends Model
         'video' => 'array',
     ];
 
-    protected $with = ['user'];
+    protected $with = ['user', 'courseEnroll'];
 }

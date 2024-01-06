@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\CourseProfileOverviewResourse;
+use App\Http\Resources\CourseProfileOverviewResource;
 
 class StudentCourseOverviewResource extends JsonResource
 {
@@ -20,7 +20,7 @@ class StudentCourseOverviewResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'video' => $this->video,
-            'profile' => new CourseProfileOverviewResourse($this->whenLoaded('user')),
+            'profile' => new CourseProfileOverviewResource($this->whenLoaded('user')),
         ];
     }
 }

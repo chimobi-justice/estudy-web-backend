@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('courses', function (Blueprint $table) {
-            $table->uuid('id')->unique();
+        Schema::create('enroll_courses', function (Blueprint $table) {
+            $table->uuid('id');
+            $table->foreignUuid('course_id')->contrained()->onDelete('cascade');
             $table->foreignUuid('user_id')->contrained()->onDelete('cascade');
-            $table->string('name');
-            $table->decimal('price', 8, 2);
-            $table->json('video')->nullable();
-            $table->string('thumbnail');
-            $table->string('category');
-            $table->text('description');
             $table->timestamps();
         });
     }
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('enroll_courses');
     }
 };

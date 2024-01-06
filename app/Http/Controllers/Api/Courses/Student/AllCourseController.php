@@ -9,9 +9,9 @@ use App\Http\Resources\StudentAllCourseResource;
 
 class AllCourseController extends Controller
 {
-    public function allCourse() {
-        $courses = Course::with(['user'])->get();
-        
+    public function allCourse(Request $request) {
+        $courses = Course::latest()->get();
+
         return StudentAllCourseResource::collection($courses);
     }
 }

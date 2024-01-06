@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\Events\Lockout;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use App\Http\Resources\LoginResource;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
 
@@ -24,14 +21,10 @@ class LoginController extends Controller
 
         $credentials = request(['email', 'password']);
 
-        $this->anthenticateFrontend();
+        $this->anthenticate();
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json([
-                'message' => 'Inavlid Email Address or Password'
-            ], 400);
-        }
-
+        $token = auth()->attempt($credentials);
+         
         return $this->respondWithToken($token);
     }
 
@@ -48,8 +41,18 @@ class LoginController extends Controller
         ]);
     }
 
-    private function anthenticateFrontend() {
+    private function anthenticate() {
         $this->ensureIsNotRateLimited();
+
+        if (! Auth::attempt(request()->only('email', 'password'), request('remember'))) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'email' => __('auth.failed'),
+            ]);
+        }
+
+        RateLimiter::clear($this->throttleKey());
     }
 
 

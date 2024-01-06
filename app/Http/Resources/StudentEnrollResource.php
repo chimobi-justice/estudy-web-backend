@@ -3,9 +3,10 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\CourseProfileResourse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LoginResource extends JsonResource
+class StudentEnrollResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,8 +16,11 @@ class LoginResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'message' => 'Successfully logged in',
-            'fullname' => $this->fullname,
+            'id' => $this->id,
+            'course_id' => $this->course_id,
+            'name' => $this->name,
+            'thumbnail' => $this->thumbnail,
+            'price' => $this->price,
         ];
     }
 }
