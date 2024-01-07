@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\DateTimeResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GetMyCourseResource extends JsonResource
@@ -19,7 +20,6 @@ class GetMyCourseResource extends JsonResource
             'name' => $this->name,
             'price' => $this->price,
             'video' => collect($this->video)->count(),
-
         ];
     }
 }
