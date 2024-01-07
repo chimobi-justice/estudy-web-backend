@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources;
 
+use Carbon\CarbonInterface;
 use Illuminate\Http\Request;
-use App\Http\Resources\DateTimeResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CourseEnrollResource extends JsonResource
+class DateTimeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,9 @@ class CourseEnrollResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'course_id' => $this->course_id,
-            'user_id' => $this->user_id,
+            'human' => $this->diffForHumans(),
+            'date_time' => $this->toDateTimeString(),
+            'human_short' => $this->diffForHumans(now(), CarbonInterface::DIFF_RELATIVE_TO_NOW, true),
         ];
     }
 }

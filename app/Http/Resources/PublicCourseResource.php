@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\DateTimeResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PublicCourseResource extends JsonResource
@@ -20,6 +21,7 @@ class PublicCourseResource extends JsonResource
             'price' => $this->price,
             'thumbnail' => $this->thumbnail,
             'video' => collect($this->video)->count(),
+            'created_at' => DateTimeResource::make($this->created_at),
         ];
     }
 }
