@@ -19,7 +19,7 @@ class ThumbnailCourseUploadController extends Controller
             return response([
                 'message' => 'Uploaded',
                 'thumbnail' => $imageUpload
-            ], 201);
+            ], 200);
         } catch (Exception $e) {
             return response([
                 'message' => $e->getMessage()

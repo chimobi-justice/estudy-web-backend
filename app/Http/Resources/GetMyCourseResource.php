@@ -20,6 +20,7 @@ class GetMyCourseResource extends JsonResource
             'name' => $this->name,
             'price' => $this->price,
             'video' => collect($this->video)->count(),
+            'created_at' => DateTimeResource::make($this->created_at)
         ];
     }
 }

@@ -9,7 +9,9 @@ use App\Http\Resources\UserFieldResource;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Profile\ProfileController;
 use App\Http\Controllers\Api\Courses\PublicCourseController;
+use App\Http\Controllers\Api\Profile\ProfileImageController;
 use App\Http\Controllers\Api\Courses\Student\AllCourseController;
 use App\Http\Controllers\Api\Courses\Student\GetCourseController;
 use App\Http\Controllers\Api\Courses\Mentor\GetMyCourseController;
@@ -23,13 +25,24 @@ use App\Http\Controllers\Api\Courses\Student\AllEnrollCourseController;
 use App\Http\Controllers\Api\Courses\Mentor\VideoCourseUploadController;
 use App\Http\Controllers\Api\Courses\Mentor\ThumbnailCourseUploadController;
 
+// Route::post('/user/profile', [ProfileController::class, 'updateProfile']);
+Route::post('/user/profile/avatar', [ProfileImageController::class, 'avatar']);
+
 Route::group(['middleware' => 'auth:api'], function() {
     Route::post('/auth/signout', [LogoutController::class, 'logout']);
     
     Route::get('/user', function (Request $request) {
-        // return new UserFieldResource($request->user());
-        return response()->json(auth()->user());
+        return new UserFieldResource($request->user());
     });
+
+    Route::patch('/user/profile', [ProfileController::class, 'updateProfile']);
+
+    Route::patch('/user/profile/all', [ProfileController::class, 'updateProfileAll']);
+
+
+
+    // Route::post('/user/profile', [ProfileImageController::class, 'profileUplaod']);
+
 
     Route::group(['prefix' => 'courses'], function() {
         Route::group(['prefix' => 'm'], function() {
@@ -61,10 +74,5 @@ Route::group(['prefix' => 'auth'], function() {
 });
 
 Route::get('/courses/all', [PublicCourseController::class, 'index']);
-
-Route::get('/random', function() {
-    return dd(Str::uuid());
-});
-
 
 // Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);

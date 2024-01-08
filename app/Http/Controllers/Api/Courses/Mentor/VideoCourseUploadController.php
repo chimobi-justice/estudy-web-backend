@@ -18,7 +18,7 @@ class VideoCourseUploadController extends Controller
             return response([
                 'message' => 'Uploaded',
                 'video' => $videoUpload
-            ], 201);
+            ], 200);
         } catch (Exception $e) {
             return response([
                 'message' => $e->getMessage()

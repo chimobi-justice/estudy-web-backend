@@ -18,6 +18,7 @@ class UpdateCourseController extends Controller
             'description' => 'required|string',
         ]);
 
+
         $course->update([
             'name' => $request->name,
             'price' => $request->price,
