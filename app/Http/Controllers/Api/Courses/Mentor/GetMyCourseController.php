@@ -11,9 +11,8 @@ use App\Http\Resources\GetMyCourseResource;
 class GetMyCourseController extends Controller
 {
     public function getMyCourse() {
-        $courses = Course::with(['user'])->where('user_id', auth()->user()->id)->get();
+        $courses = Course::where('user_id', auth()->user()->id)->latest()->get();
 
         return GetMyCourseResource::collection($courses);
-
     }
 }

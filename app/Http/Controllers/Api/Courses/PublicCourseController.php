@@ -12,7 +12,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class PublicCourseController extends Controller
 {
     public function index(): JsonResource {
-        $course = Course::all();
+        $course = Course::latest()->get();
 
         return PublicCourseResource::collection($course); 
     }
