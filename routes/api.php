@@ -9,6 +9,7 @@ use App\Http\Resources\UserFieldResource;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\DeleteAccountController;
 use App\Http\Controllers\Api\Profile\ProfileController;
 use App\Http\Controllers\Api\Courses\PublicCourseController;
 use App\Http\Controllers\Api\Profile\ProfileImageController;
@@ -25,7 +26,6 @@ use App\Http\Controllers\Api\Courses\Student\AllEnrollCourseController;
 use App\Http\Controllers\Api\Courses\Mentor\VideoCourseUploadController;
 use App\Http\Controllers\Api\Courses\Mentor\ThumbnailCourseUploadController;
 
-// Route::post('/user/profile', [ProfileController::class, 'updateProfile']);
 Route::post('/user/profile/avatar', [ProfileImageController::class, 'avatar']);
 
 Route::group(['middleware' => 'auth:api'], function() {
@@ -39,10 +39,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     Route::patch('/user/profile/all', [ProfileController::class, 'updateProfileAll']);
 
-
-
-    // Route::post('/user/profile', [ProfileImageController::class, 'profileUplaod']);
-
+    Route::post('/user/delete', [DeleteAccountController::class, 'delete']);
 
     Route::group(['prefix' => 'courses'], function() {
         Route::group(['prefix' => 'm'], function() {
