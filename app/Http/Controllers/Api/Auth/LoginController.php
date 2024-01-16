@@ -48,7 +48,7 @@ class LoginController extends Controller
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'email' => ('Invalid Email or Password'),
             ]);
         }
 

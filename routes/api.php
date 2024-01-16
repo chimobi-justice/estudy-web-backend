@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\Courses\Student\UnEnrollCourseController;
 use App\Http\Controllers\Api\Courses\Mentor\GetUpdatedCourseController;
 use App\Http\Controllers\Api\Courses\Student\AllEnrollCourseController;
 use App\Http\Controllers\Api\Courses\Mentor\VideoCourseUploadController;
+use App\Http\Controllers\Api\Courses\Mentor\MentorEnrolledStudentController;
 use App\Http\Controllers\Api\Courses\Mentor\ThumbnailCourseUploadController;
 
 Route::post('/user/profile/avatar', [ProfileImageController::class, 'avatar']);
@@ -49,6 +50,8 @@ Route::group(['middleware' => 'auth:api'], function() {
             Route::get('/all', [GetMyCourseController::class, 'getMyCourse']);
             Route::post('/thumbnail', [ThumbnailCourseUploadController::class, 'thumbnailUplaod']);
             Route::post('/video', [VideoCourseUploadController::class, 'videoUpload']);
+
+            Route::get('/enrolled-students', [MentorEnrolledStudentController::class, 'mentorEnrolledStudents']);
 
             Route::get('/{course}', [GetUpdatedCourseController::class, 'getUpdateCourse']);
         });
