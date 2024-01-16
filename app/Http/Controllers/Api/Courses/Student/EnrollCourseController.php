@@ -15,7 +15,8 @@ class EnrollCourseController extends Controller
 
         $course->courseEnroll()->create([
             'user_id' => $request->user()->id,
-            'course_id' => $course->id
+            'course_id' => $course->id,
+            'owner_id' => $course->user_id
         ]);
 
         return response([
