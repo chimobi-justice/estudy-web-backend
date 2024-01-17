@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\Courses\Mentor;
 
-use App\Models\User;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
