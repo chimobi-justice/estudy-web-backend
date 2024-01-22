@@ -10,10 +10,10 @@ class VideoCourseUploadController extends Controller
     public function videoUpload(Request $request) {
         $request->validate([
             'video' => 'required|array',
-            'video.*' => 'mimetypes:video/avi,video/mpeg,video/quicktime,video/mp4|max:8192',
+            'video.*' => 'mimetypes:video/avi,video/mpeg,video/mp4|max:8192',
         ], [
-            'video.mimetypes' => 'The :attribute must be a video of type: avi, mpeg, quicktime, or mp4.',
-            'video.max' => 'The :attribute must not be greater than 8 MB.',
+            'video.*.mimetypes' => 'The :attribute must be a video of type: avi, mpeg or mp4.',
+            'video.*.max' => 'The :attribute must not be greater than 8 MB.',
         ]);
 
         try {
@@ -42,5 +42,6 @@ class VideoCourseUploadController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
+        
     }
 }
