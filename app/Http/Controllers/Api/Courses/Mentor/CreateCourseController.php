@@ -9,12 +9,13 @@ class CreateCourseController extends Controller
 {
     public function createCourse(Request $request) {        
         $request->validate([
-            'name' => 'required|string',
+            'name' => 'required||string',
             'price' => 'required|integer',
             'video' => 'required',
             'category' => 'required|string',
             'thumbnail' => 'required',
             'description' => 'required|string',
+            'title' => 'required|array',
         ]);
 
 
@@ -25,6 +26,7 @@ class CreateCourseController extends Controller
             'thumbnail' => $request->thumbnail,
             'category' => $request->category,
             'description' => $request->description,
+            'title' => $request->title,
         ]);
 
         return response()->json([

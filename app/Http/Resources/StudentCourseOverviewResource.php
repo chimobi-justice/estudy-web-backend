@@ -20,9 +20,9 @@ class StudentCourseOverviewResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
+            'title' => $this->title,
             'video' => $this->video,
             'profile' => new CourseProfileOverviewResource($this->whenLoaded('user')),
-            'created_at' => DateTimeResource::make($this->created_at),
         ];
     }
 }

@@ -24,10 +24,12 @@ class Course extends Model
         'category',
         'thumbnail',
         'description',
+        'title',
     ];
 
     protected $casts = [
         'video' => 'array',
+        'title' => 'array',
     ];
 
     protected $with = ['user', 'courseEnroll'];
