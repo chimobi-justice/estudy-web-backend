@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 // use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 
 use App\Http\Resources\UserFieldResource;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
@@ -32,15 +33,13 @@ Route::post('/user/profile/avatar', [ProfileImageController::class, 'avatar']);
 Route::group(['middleware' => 'auth:api'], function() {
     Route::post('/auth/signout', [LogoutController::class, 'logout']);
     
-    Route::get('/user', function (Request $request) {
-        return new UserFieldResource($request->user());
-    });
+    Route::get('/user', [UserController::class, 'user']);
 
     Route::patch('/user/profile', [ProfileController::class, 'updateProfile']);
 
     Route::patch('/user/profile/all', [ProfileController::class, 'updateProfileAll']);
 
-    Route::post('/user/delete', [DeleteAccountController::class, 'delete']);
+    Route::delete('/user/delete', [DeleteAccountController::class, 'delete']);
 
     Route::group(['prefix' => 'courses'], function() {
         Route::group(['prefix' => 'm'], function() {

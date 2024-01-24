@@ -1,0 +1,1068 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Estudy",
+        "description": "API doc for Estudy",
+        "contact": {
+            "url": "https://justice-chimobi.vercel.app/"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api/"
+        }
+    ],
+    "paths": {
+        "/auth/signin": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Logs existing user with credentials",
+                "description": "authentication endpoint using JWT token",
+                "operationId": "be2d54ca411de1e23a8c053ef38f2e9a",
+                "requestBody": {
+                    "description": "authenticate if user exists",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "giftowens@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "secrets"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Logged in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Logged in successfully",
+                                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2F1dGgvc2lnbAsIm5iZiI6MTcwNjAwNDI1MCwianRpIjoidE1tUlNHbjg0QlZoQkdYTSIsInN1YiI6IjU1MjJmNjQyLTYyOGQtNDZkZi04NDMyLTNmZTBjMjllNDM5YiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.xoKfHEHLZ6vDwIfg-GZQXoMwG9wQGlgs4vDrLTEVwoU",
+                                    "token_type": "bearer",
+                                    "expires_in": 3600,
+                                    "user_type": "mentor"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            }
+        },
+        "/auth/signout": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Logs out existing user",
+                "description": "Logs out existing user",
+                "operationId": "3bcf0a7012d279fb706c34c5184063e9",
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged out",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Successfully logged out"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/auth/signup": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Register a new user",
+                "description": "Creates a new user by role using either the listed enum ['mentor', 'mentee']",
+                "operationId": "fe09289caab15e10f1a2c5a38b1e04f7",
+                "requestBody": {
+                    "description": "create new user",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "fullname": {
+                                        "type": "string",
+                                        "example": "Gift Owen"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "giftowens@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "secrets"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "mentor"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "account created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "account created successfully"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            }
+        },
+        "/courses/m/all": {
+            "get": {
+                "tags": [
+                    "courses"
+                ],
+                "summary": "Get all courses created by a mentor",
+                "description": "Get all courses created by a mentor",
+                "operationId": "e5692be9b171028f656d54a5174377c1",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "estudy"
+                                                    },
+                                                    "price": {
+                                                        "type": "string",
+                                                        "format": "currency",
+                                                        "example": "20.00"
+                                                    },
+                                                    "video": {
+                                                        "type": "numner",
+                                                        "example": "2"
+                                                    },
+                                                    "created_at": {
+                                                        "$ref": "#/components/schemas/DateTimeResource"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/courses/all": {
+            "get": {
+                "tags": [
+                    "courses"
+                ],
+                "summary": "Get list of Courses",
+                "description": "Returns list of Courses",
+                "operationId": "getCoursesList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/PublicCourseResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/courses/s/all": {
+            "get": {
+                "tags": [
+                    "courses"
+                ],
+                "summary": "Get all courses for mentee dashboard",
+                "description": "Get all courses for dashboard",
+                "operationId": "55d8b31020ceda2c0c79d86782b96e56",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "intro course"
+                                                    },
+                                                    "thumbnail": {
+                                                        "type": "string",
+                                                        "example": "https://res.cloudinary.com/estudy/image/upload/v1705789451/yofikr4gyecw04sp5ial.jpg"
+                                                    },
+                                                    "price": {
+                                                        "type": "string",
+                                                        "format": "currency",
+                                                        "example": "20.00"
+                                                    },
+                                                    "profile": {
+                                                        "$ref": "#/components/schemas/CourseProfileResource"
+                                                    },
+                                                    "isEnrolled": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "courseEnroll": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "$ref": "#/components/schemas/CourseEnrollResource"
+                                                        }
+                                                    },
+                                                    "created_at": {
+                                                        "$ref": "#/components/schemas/DateTimeResource"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/courses/s/user/enroll-courses": {
+            "get": {
+                "tags": [
+                    "courses"
+                ],
+                "summary": "Get all courses enrolled for a particular mentee",
+                "description": "Get all courses enrolled for a particular mentee",
+                "operationId": "286b981427e62f5cefef912545ddfffc",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                                                    },
+                                                    "course_id": {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                        "example": "450e8400-e29b-41d4-a716-446655440000"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "estudy"
+                                                    },
+                                                    "thumbnail": {
+                                                        "type": "string",
+                                                        "example": "https://res.cloudinary.com/estudy/image/upload/v1705789451/yofikr4gyecw04sp5ial.jpg"
+                                                    },
+                                                    "price": {
+                                                        "type": "string",
+                                                        "format": "currency",
+                                                        "example": "20.00"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/courses/s/user/{id}/enroll": {
+            "post": {
+                "tags": [
+                    "courses"
+                ],
+                "summary": "Mentee enroll on a course",
+                "description": "Mentee enroll on a course",
+                "operationId": "218745b0e62b3d283a1b03617bc71f93",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Course ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "uuid": {
+                                "summary": "An UUID value.",
+                                "value": "0006faf6-7a61-426c-9034-579f2cfcfa83"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "course enroll successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/courses/s/{id}": {
+            "get": {
+                "tags": [
+                    "courses"
+                ],
+                "summary": "Get individual course on mentee dashboard",
+                "description": "Get individual course on mentee dashboard",
+                "operationId": "ed1373af8f197e957a7baf22b677f32a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Course ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "uuid": {
+                                "summary": "An UUID value.",
+                                "value": "0006faf6-7a61-426c-9034-579f2cfcfa83"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "course overview",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/StudentCourseOverviewResource"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/courses/s/user/{id}/unenroll": {
+            "post": {
+                "tags": [
+                    "courses"
+                ],
+                "summary": "Mentee unenroll from a course",
+                "description": "Mentee unenroll from a course",
+                "operationId": "c0ecfb3eb2f4cdc601d6d7d66a03efb8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Course ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "uuid": {
+                                "summary": "An UUID value.",
+                                "value": "0006faf6-7a61-426c-9034-579f2cfcfa83"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "course unenroll successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/delete": {
+            "delete": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete user from database",
+                "description": "Delete user from database",
+                "operationId": "6c125472a3ed59db6b89bf70aae5610f",
+                "responses": {
+                    "200": {
+                        "description": "Account deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Account deleted successfully"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/profile": {
+            "patch": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Update current authenticated user avatar profile",
+                "description": "Update current authenticated user avatar profile",
+                "operationId": "updateUserProfileAvatar",
+                "requestBody": {
+                    "description": "Update user avatar profile",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "avatar": {
+                                        "type": "string",
+                                        "example": "https://res.cloudinary.com/dbx3dhfkt/image/upload/v1672045944/estudy/pictures/image-5a9482cd3-a97e-4627-dbc3-9cb53797e40a.png"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Updated successfully"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    },
+                    "401": {
+                        "description": "Unathenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/profile/all": {
+            "patch": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Update current authenticated user profile",
+                "description": "Update user profile",
+                "operationId": "updateUserProfile",
+                "requestBody": {
+                    "description": "Update user profile",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "fullname": {
+                                        "type": "string",
+                                        "example": "Gift Owen"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "giftowens@example.com"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "10a avenue Street"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "ikeja"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "lagos"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "nigeria"
+                                    },
+                                    "zip": {
+                                        "type": "number",
+                                        "example": "100001"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Updated successfully"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    },
+                    "401": {
+                        "description": "Unathenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/profile/avatar": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Upload profile image to cloudinary",
+                "description": "Upload profile image to cloudinary and get actual url from response to use for profile avatar endpoint",
+                "operationId": "PostUserProfileAvatar",
+                "requestBody": {
+                    "description": "'Uploaded successfully'",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "avatar": {
+                                        "type": "string",
+                                        "example": "your_image_file.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Updated successfully",
+                                    "avatar": "https://res.cloudinary.com/dbx3dhfkt/image/upload/v1672045944/estudy/pictures/image-5a9482cd3-a97e-4627-dbc3-9cb53797e40a.png"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    },
+                    "401": {
+                        "description": "Unathenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get curently authenticated user details",
+                "description": "Get curently authenticated user details",
+                "operationId": "36bba6d20fa5d24d908836e1adfb3c3b",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "example": {
+                                                "id": "550e8400-e29b-41d4-a716-446655440000",
+                                                "fullname": "Gift Owens",
+                                                "email": "giftowens@emample.com",
+                                                "avatar": "https://res.cloudinary.com/estudy/image/upload/v1705789451/yofikr4gyecw04sp5ial.jpg",
+                                                "address": "10a avenue Street",
+                                                "city": "ikeja",
+                                                "state": "lagos",
+                                                "zip": "100001",
+                                                "country": "nigeria"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CourseEnrollResource": {
+                "title": "CourseEnrollResource",
+                "description": "Course mentee enrolled in ",
+                "properties": {
+                    "course_id": {
+                        "description": "course identifier",
+                        "type": "string",
+                        "example": "230e8400-e29b-41d4-a716-446655440000"
+                    },
+                    "user_id": {
+                        "description": "user identifier",
+                        "type": "string",
+                        "example": "660e8400-e29b-41d4-a716-156655440000"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "CourseEnrollResource"
+                }
+            },
+            "CourseProfileOverviewResource": {
+                "title": "CourseProfileOverviewResource",
+                "description": "Course overview",
+                "properties": {
+                    "fullname": {
+                        "description": "full name",
+                        "type": "string",
+                        "example": "Gift Owens"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "CourseProfileOverviewResource"
+                }
+            },
+            "CourseProfileResource": {
+                "title": "CourseProfileResource",
+                "description": "Course Profile Resource",
+                "properties": {
+                    "fullname": {
+                        "description": "Full name",
+                        "type": "string",
+                        "example": "Gift Owens"
+                    },
+                    "avatar": {
+                        "description": "Course name",
+                        "type": "string",
+                        "example": "https://res.cloudinary.com/estudy/image/upload/v1705789451/yofikr4gyecw04sp5ial.jpg"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "CourseProfileResource"
+                }
+            },
+            "DateTimeResource": {
+                "title": "DateTimeResource",
+                "description": "format date time",
+                "properties": {
+                    "human": {
+                        "description": "long format string",
+                        "type": "string",
+                        "example": "2 hours ago"
+                    },
+                    "date_time": {
+                        "description": "string representation",
+                        "type": "string",
+                        "example": "2024-01-22 12:01:58"
+                    },
+                    "human_short": {
+                        "description": "short format string",
+                        "type": "string",
+                        "example": "2h ago"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "DateTimeResource"
+                }
+            },
+            "PublicCourseResource": {
+                "title": "PublicCourseResource",
+                "description": "Public Course Resource",
+                "properties": {
+                    "id": {
+                        "description": "Course ID",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                    },
+                    "name": {
+                        "description": "Course name",
+                        "type": "string",
+                        "example": "Intro Course"
+                    },
+                    "price": {
+                        "description": "Course price",
+                        "type": "string",
+                        "format": "currency",
+                        "example": "20.00"
+                    },
+                    "thumbnail": {
+                        "description": "URL of the course thumbnail",
+                        "type": "string",
+                        "example": "https://res.cloudinary.com/dbx3dhfkt/image/upload/v1672045944/estudy/pictures/image-5a9482cd3-a97e-4627-dbc3-9cb53797e40a.png"
+                    },
+                    "category": {
+                        "description": "Course category",
+                        "type": "string",
+                        "example": "Web Development"
+                    },
+                    "description": {
+                        "description": "Course description",
+                        "type": "string",
+                        "example": "example of course description"
+                    },
+                    "video": {
+                        "description": "Number of videos in the course",
+                        "type": "integer",
+                        "example": "4"
+                    },
+                    "profile": {
+                        "$ref": "#/components/schemas/CourseProfileResource"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "publicCourseResource"
+                }
+            },
+            "StudentCourseOverviewResource": {
+                "title": "StudentCourseOverviewResource",
+                "description": "course overview resource",
+                "properties": {
+                    "id": {
+                        "description": "Course ID",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                    },
+                    "name": {
+                        "description": "Course name",
+                        "type": "string",
+                        "example": "Intro Course"
+                    },
+                    "description": {
+                        "description": "Course description",
+                        "type": "string",
+                        "example": "example of course description"
+                    },
+                    "title": {
+                        "description": "Course title",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "Introduction"
+                        }
+                    },
+                    "video": {
+                        "description": "Number of videos in the course",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "https://res.cloudinary.com/driggenlearn/video/upload/v1706030614/ayroiowquwwrgdogsznn.mp4"
+                        }
+                    },
+                    "profile": {
+                        "$ref": "#/components/schemas/CourseProfileOverviewResource"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "StudentCourseOverviewResource"
+                }
+            },
+            "User": {
+                "title": "User",
+                "description": "User model",
+                "properties": {
+                    "fullname": {
+                        "title": "Full Name",
+                        "description": "Full Name of the User",
+                        "format": "string",
+                        "example": "Gift Owens"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "Email of the User",
+                        "format": "string",
+                        "example": "giftowens@example.com"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Password of the User",
+                        "format": "string",
+                        "example": "secret"
+                    },
+                    "role": {
+                        "title": "Role",
+                        "description": "Role of the User",
+                        "format": "string",
+                        "enum": [
+                            "mentor",
+                            "mentee"
+                        ],
+                        "example": "mentee"
+                    },
+                    "address": {
+                        "title": "Address",
+                        "description": "Address of the User",
+                        "format": "string",
+                        "example": "10a avenue Street"
+                    },
+                    "city": {
+                        "title": "City",
+                        "description": "City of the User",
+                        "format": "string",
+                        "example": "ikeja"
+                    },
+                    "state": {
+                        "title": "State",
+                        "description": "State of the User",
+                        "format": "string",
+                        "example": "lagos"
+                    },
+                    "zip": {
+                        "title": "Zip",
+                        "description": "Zip code of the User",
+                        "format": "number",
+                        "example": "100001"
+                    },
+                    "country": {
+                        "title": "Country",
+                        "description": "Country of the User",
+                        "format": "string",
+                        "example": "Nigeria"
+                    },
+                    "avatar": {
+                        "title": "Avatar",
+                        "description": "Avatar of the User",
+                        "format": "string",
+                        "example": "https://res.cloudinary.com/dbx3dhfkt/image/upload/v1672045944/estudy/pictures/image-5a9482cd3-a97e-4627-dbc3-9cb53797e40a.png"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "user"
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "http",
+                "scheme": "bearer",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Projects",
+            "description": "API Endpoints of Projects"
+        }
+    ]
+}

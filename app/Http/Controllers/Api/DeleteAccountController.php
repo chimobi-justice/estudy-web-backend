@@ -7,6 +7,26 @@ use Illuminate\Http\Request;
 
 class DeleteAccountController extends Controller
 {
+    /**
+     * @OA\Delete(
+     *  path="/user/delete",
+     *  tags={"users"},
+     *  summary="Delete user from database",
+     *  description="Delete user from database",
+     *  security={{"bearer_token": {}}},
+     *  @OA\Response(
+     *        response="200", 
+     *        description="Account deleted successfully",
+     *        
+     *        @OA\JsonContent(
+     *           example={
+     *               "message": "Account deleted successfully"
+     *           }
+     *        )
+     *    ),
+     *    @OA\Response(response="401", description="Unauthenticated"),
+     * )
+    */
     public function delete() {
        try {
           if (auth()->check()) {
