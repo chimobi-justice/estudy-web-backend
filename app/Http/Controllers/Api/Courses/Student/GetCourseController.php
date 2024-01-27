@@ -12,16 +12,17 @@ class GetCourseController extends Controller
      * @OA\Get(
      *  path="/courses/s/{id}",
      *  tags={"courses"},
-     *  summary="Get individual course on mentee dashboard",
-     *  description="Get individual course on mentee dashboard",
+     *  summary="Get individual course on students dashboard",
+     *  description="Get individual course on students dashboard",
      *  security={{"bearer_token": {}}},
      *  @OA\Parameter(
      *      name="id",
-     *      description="Course ID",
+     *      description="Course ID (UUID)",
      *      required=true,
      *      in="path",
      *      @OA\Schema(
      *         type="string",
+     *         format="uuid"
      *      ),
      *      @OA\Examples(example="uuid", value="0006faf6-7a61-426c-9034-579f2cfcfa83", summary="An UUID value."),
      *  ),

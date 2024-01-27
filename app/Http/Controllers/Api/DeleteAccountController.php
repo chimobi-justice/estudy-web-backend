@@ -15,14 +15,8 @@ class DeleteAccountController extends Controller
      *  description="Delete user from database",
      *  security={{"bearer_token": {}}},
      *  @OA\Response(
-     *        response="200", 
-     *        description="Account deleted successfully",
-     *        
-     *        @OA\JsonContent(
-     *           example={
-     *               "message": "Account deleted successfully"
-     *           }
-     *        )
+     *        response="204", 
+     *        description="Successful operation",
      *    ),
      *    @OA\Response(response="401", description="Unauthenticated"),
      * )
@@ -37,9 +31,7 @@ class DeleteAccountController extends Controller
 
             $user->delete();
 
-            return response([
-                'message' => 'Account deleted successfully'
-            ]);
+            return response(null, 204);
           }
         } catch (\Exception $e) {
             return response([

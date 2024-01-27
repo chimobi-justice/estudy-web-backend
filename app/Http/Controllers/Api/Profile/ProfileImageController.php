@@ -16,31 +16,32 @@ class ProfileImageController extends Controller
      *      security={{"bearer_token": {}}},
      *      description="Upload profile image to cloudinary and get actual url from response to use for profile avatar endpoint",
      *      @OA\RequestBody(
-     *        required=true,
-     *        description="'Uploaded successfully'",
-     *        @OA\JsonContent(
-     *            @OA\Property(
-     *                property="avatar", 
-     *                type="string", 
-     *                example="your_image_file.jpg"
-     *            )
-     *        )
+     *          required=true,
+     *          description="Image file to upload",
+     *          @OA\MediaType(
+     *              mediaType="multipart/form-data",
+     *              @OA\Schema(
+     *                  @OA\Property(
+     *                      property="avatar",
+     *                      type="string",
+     *                      format="binary",
+     *                      description="image file to upload"
+     *                  )
+     *              )
+     *          )
      *      ),
-     * *    @OA\Response(
-     *        response="200", 
-     *        description="Updated successfully",
-     *        
-     *        @OA\JsonContent(
-     *           example={
-     *              "message": "Updated successfully",
-     *              "avatar": "https://res.cloudinary.com/dbx3dhfkt/image/upload/v1672045944/estudy/pictures/image-5a9482cd3-a97e-4627-dbc3-9cb53797e40a.png"
-     *           }
-     *        ),
-     *     ),
-     *     @OA\Response(response="400", description="Bad Request"),
-     *     @OA\Response(response="422", description="Unprocessable Content"),
-     *     @OA\Response(response="401", description="Unathenticated")
-     *  )
+     *      @OA\Response(
+     *          response="200", 
+     *          description="Uploaded successfully",
+     *          @OA\JsonContent(
+     *              example={
+     *                  "message": "uploaded",
+     *                  "avatar": "https://res.cloudinary.com/estudy/image/upload/v1705789451/yofikr4gyecw04sp5ial.png"
+     *              }
+     *          )
+     *      ),
+     *      @OA\Response(response="401", description="Unauthenticated")
+     * )
      */
     public function avatar(Request $request) {
         $request->validate([
@@ -53,7 +54,7 @@ class ProfileImageController extends Controller
             return response([
                 'message' => 'Uploaded successfully',
                 'avatar' => $avatarUpload
-            ], 200);
+            ], 201);
         } catch (Exception $e) {
             return response([
                 'message' => $e->getMessage()

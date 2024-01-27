@@ -13,8 +13,8 @@ class AllCourseController extends Controller
     * @OA\Get(
     *  path="/courses/s/all",
     *  tags={"courses"},
-    *  summary="Get all courses for mentee dashboard",
-    *  description="Get all courses for dashboard",
+    *  summary="Get all courses for students dashboard",
+    *  description="Get all courses for students dashboard",
     *  security={{"bearer_token": {}}},
     *  @OA\Response(
     *        response="200", 

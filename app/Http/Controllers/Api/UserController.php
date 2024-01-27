@@ -36,7 +36,7 @@ class UserController extends Controller
      *           )
      *        )
      *    ),
-     *    @OA\Response(response="401", description="Unauthenticated"),
+     *    @OA\Response(response="401", description="Unathenticated"),
      * )
     */
     public function user(Request $request) {

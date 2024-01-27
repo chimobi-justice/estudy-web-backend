@@ -56,6 +56,7 @@ class StudentCourseOverviewResource extends JsonResource
      * )
      */
     private $data;
+    
     /**
      * Transform the resource into an array.
      *

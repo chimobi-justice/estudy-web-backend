@@ -23,15 +23,11 @@ class GetMyCourseController extends Controller
     *     @OA\JsonContent(
     *       @OA\Property(
     *           property="data", 
-    *           type="array",
-    *           @OA\Items(
-    *               type="object",
     *               @OA\Property(property="id", type="string", format="uuid", example="550e8400-e29b-41d4-a716-446655440000"),
     *               @OA\Property(property="name", type="string", example="estudy"),
     *               @OA\Property(property="price", type="string", format="currency", example="20.00"),
     *               @OA\Property(property="video", type="numner", example="2"),
     *               @OA\Property(property="created_at", ref="#/components/schemas/DateTimeResource"),
-    *           ),
     *      ),
     *    )
     *   ),

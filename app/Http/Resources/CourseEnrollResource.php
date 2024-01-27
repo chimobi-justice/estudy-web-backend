@@ -9,7 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @OA\Schema(
  *  title="CourseEnrollResource",
- *  description="Course mentee enrolled in ",
+ *  description="Course students enrolled in ",
  *  @OA\Xml(
  *   name="CourseEnrollResource"
  *  )

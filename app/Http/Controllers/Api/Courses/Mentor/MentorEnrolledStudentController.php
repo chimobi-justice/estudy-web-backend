@@ -9,6 +9,28 @@ use App\Http\Resources\MentorEnrolledStudentResource;
 
 class MentorEnrolledStudentController extends Controller
 {
+    /**
+     * @OA\Get(
+     *  path="/courses/m/enrolled-students",
+     *  tags={"courses"},
+     *  summary="Get all students enrolled on a mentor course",
+     *  description="Get all students enrolled on a mentor course",
+     *  security={{"bearer_token": {}}},
+     *  @OA\Response(
+     *        response="200", 
+     *        description="course overview",
+     *        @OA\JsonContent(
+     *          @OA\property(
+     *            property="data", 
+     *            type="array", 
+     *            @OA\Items(ref="#/components/schemas/MentorEnrolledStudentResource")
+     *          )
+     *      )
+     *  ),
+     *  @OA\Response(response="401", description="Unauthenticated"),
+     *  @OA\Response(response="404", description="Not Found"),
+     * )
+    */
     public function mentorEnrolledStudents(Request $request) {
 
         $ownerOfCourseId = $request->user()->id;

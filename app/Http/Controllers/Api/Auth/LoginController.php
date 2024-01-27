@@ -35,8 +35,6 @@ class LoginController extends Controller
      *           example={
      *              "message": "Logged in successfully",      
      *              "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2F1dGgvc2lnbAsIm5iZiI6MTcwNjAwNDI1MCwianRpIjoidE1tUlNHbjg0QlZoQkdYTSIsInN1YiI6IjU1MjJmNjQyLTYyOGQtNDZkZi04NDMyLTNmZTBjMjllNDM5YiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.xoKfHEHLZ6vDwIfg-GZQXoMwG9wQGlgs4vDrLTEVwoU",
-     *              "token_type": "bearer",
-     *              "expires_in": 3600,
      *              "user_type": "mentor"
      *           }
      *        ),
@@ -67,8 +65,6 @@ class LoginController extends Controller
         return response()->json([
             'message' => 'Logged in successfully',
             'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
             'user_type' => $user
         ]);
     }
