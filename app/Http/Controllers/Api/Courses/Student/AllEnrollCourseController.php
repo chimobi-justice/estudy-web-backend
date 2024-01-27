@@ -13,8 +13,8 @@ class AllEnrollCourseController extends Controller
     * @OA\Get(
     *  path="/courses/s/user/enroll-courses",
     *  tags={"courses"},
-    *  summary="Get all courses enrolled for a particular mentee",
-    *  description="Get all courses enrolled for a particular mentee",
+    *  summary="Get all courses enrolled for a particular students",
+    *  description="Get all courses enrolled for a particular students",
     *  security={{"bearer_token": {}}},
     *  @OA\Response(
     *        response="200", 

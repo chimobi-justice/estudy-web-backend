@@ -8,7 +8,58 @@ use App\Http\Controllers\Controller;
 
 class UpdateCourseController extends Controller
 {
-    public function updateCourse(Request $request, Course $course) {        
+    /**
+    * @OA\Patch(
+    *  path="/courses/m/{id}",
+    *  tags={"courses"},
+    *  summary="Update course created by a mentor",
+    *  description="Update course created by a mentor",
+    *  security={{"bearer_token": {}}},
+    *  @OA\Parameter(
+    *      name="id",
+    *      description="Course ID",
+    *      required=true,
+    *      in="path",
+    *      @OA\Schema(
+    *         type="string",
+    *         format="uuid"
+    *      ),
+    *      @OA\Examples(example="uuid", value="0006faf6-7a61-426c-9034-579f2cfcfa83", summary="An UUID value."),
+    *  ),
+    *  @OA\RequestBody(
+    *    required=true,
+    *    description="Created courses by mentor only: (Get your videos from return payload at /courses/m/video) and (thumbnail from return payload /courses/m/thumnail)",
+    *    @OA\JsonContent(
+    *      @OA\Property(property="name", type="string", example="estudy course name"),
+    *      @OA\Property(property="price", type="number", example=10),
+    *      @OA\Property(
+    *        property="video", 
+    *        type="string", 
+    *        example={
+    *           "https://res.cloudinary.com/estudy/image/upload/v1705789451/yofikr4gyecw04sp5ial.mp4", 
+    *           "https://res.cloudinary.com/estudy/image/upload/v1705789451/yofikr4gyecw04sp5ial.mp4"
+    *        }),
+    *      @OA\Property(property="category", type="string", example="Web Development"),
+    *      @OA\Property(property="thumbnail", type="string", example="https://res.cloudinary.com/estudy/image/upload/v1705789451/yofikr4gyecw04sp5ial.png"),
+    *      @OA\Property(property="description", type="string", example="estudy course description"),
+    *      @OA\Property(property="title", type="string", example={"Title 1", "Title 2"}),
+    *   )
+    *  ),
+    *  @OA\Response(
+    *    response="200", 
+    *    description="Successful operation",
+    *    @OA\JsonContent(
+    *      example={
+    *       "message": "Course updated successfully",      
+    *       }
+    *    ),
+    *   ),
+    *    @OA\Response(response="401", description="Unauthenticated"),
+    * )
+    */
+    public function updateCourse(Request $request, Course $course) {  
+        $this->authorize('update', $course);
+
         $request->validate([
             'name' => 'required|string',
             'price' => 'required|integer',

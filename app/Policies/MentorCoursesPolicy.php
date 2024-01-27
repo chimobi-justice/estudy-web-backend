@@ -8,7 +8,7 @@ use Illuminate\Auth\Access\Response;
 
 class MentorCoursesPolicy
 {
-    public function create(User $user): bool
+    public function create(User $user)
     {
         return $user->role === 'mentor';
     }
@@ -19,7 +19,7 @@ class MentorCoursesPolicy
     }
 
     public function delete(User $user, Course $course): bool
-    {
+    {   
         return $user->id === $course->user_id;
     }
 }

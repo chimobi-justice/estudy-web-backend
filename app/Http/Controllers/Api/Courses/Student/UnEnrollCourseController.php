@@ -12,8 +12,8 @@ class UnEnrollCourseController extends Controller
      * @OA\Post(
      *  path="/courses/s/user/{id}/unenroll",
      *  tags={"courses"},
-     *  summary="Mentee unenroll from a course",
-     *  description="Mentee unenroll from a course",
+     *  summary="students unenroll from a course",
+     *  description="students unenroll from a course",
      *  security={{"bearer_token": {}}},
      *  @OA\Parameter(
      *      name="id",
@@ -22,6 +22,7 @@ class UnEnrollCourseController extends Controller
      *      in="path",
      *      @OA\Schema(
      *         type="string",
+     *         format="uuid"
      *      ),
      *      @OA\Examples(example="uuid", value="0006faf6-7a61-426c-9034-579f2cfcfa83", summary="An UUID value."),
      *  ),

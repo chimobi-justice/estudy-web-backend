@@ -12,8 +12,8 @@ class EnrollCourseController extends Controller
      * @OA\Post(
      *  path="/courses/s/user/{id}/enroll",
      *  tags={"courses"},
-     *  summary="Mentee enroll on a course",
-     *  description="Mentee enroll on a course",
+     *  summary="students enroll on a course",
+     *  description="students enroll on a course",
      *  security={{"bearer_token": {}}},
      *  @OA\Parameter(
      *      name="id",
@@ -22,6 +22,7 @@ class EnrollCourseController extends Controller
      *      in="path",
      *      @OA\Schema(
      *         type="string",
+     *         format="uuid"
      *      ),
      *      @OA\Examples(example="uuid", value="0006faf6-7a61-426c-9034-579f2cfcfa83", summary="An UUID value."),
      *  ),
