@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->unique();
             $table->foreignUuid('user_id')->contrained()->onDelete('cascade');
             $table->string('name');
-            $table->decimal('price', 8, 2);
+            $table->decimal('price', 8, 2)->nullable();
             $table->json('video') ;
             $table->string('thumbnail');
             $table->string('category');
