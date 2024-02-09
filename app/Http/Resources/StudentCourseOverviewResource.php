@@ -70,6 +70,9 @@ class StudentCourseOverviewResource extends JsonResource
             'description' => $this->description,
             'title' => $this->title,
             'video' => $this->video,
+            'isEnrolled' => $this->whenLoaded('courseEnroll', function () {
+                return $this->courseEnroll->contains('user_id', auth()->id());
+            }),
             'profile' => new CourseProfileOverviewResource($this->whenLoaded('user')),
         ];
     }

@@ -3,11 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\DateTimeResource;
-use App\Http\Resources\CourseProfileResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class StudentAllCourseResource extends JsonResource
+class StudentCoursePaidOverviewResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,18 +13,21 @@ class StudentAllCourseResource extends JsonResource
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
-    {   
+    {
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'slug' => $this->slug,
-            'thumbnail' => $this->thumbnail,
+            'description' => $this->description,
             'price' => $this->price,
+            'title' => $this->title,
+            'sub_title' => $this->sub_title,
+            'thumbnail' => $this->thumbnail,
+            'video' => $this->video,
+            'course_preview' => $this->course_preview,
             'isEnrolled' => $this->whenLoaded('courseEnroll', function () {
                 return $this->courseEnroll->contains('user_id', auth()->id());
             }),
-            'profile' => new CourseProfileResource($this->whenLoaded('user')),
-            'created_at' => DateTimeResource::make($this->created_at),
-        ];
+            'profile' => new CourseProfileOverviewResource($this->whenLoaded('user')),
+        ];;
     }
 }

@@ -38,6 +38,10 @@ class GetCourseController extends Controller
     */
     public function getCourse(Course $course) {
 
+        if (!$course->enrollByUser(auth()->user()) && $course->price !== null) {
+            return response(['message' => 'You are Unauthorize'], 403);
+        }
+
         return new StudentCourseOverviewResource($course);
     }
 }

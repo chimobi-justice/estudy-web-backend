@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\Course\CourseTraits;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 */
 class Course extends Model
 {
-    use HasFactory, HasUuid, CourseTraits;
+    use HasFactory, HasUuid, CourseTraits, Sluggable;
 
     protected $primaryKey = 'id';
 
@@ -35,7 +36,6 @@ class Course extends Model
      *  )
     */
     private $name;
-
 
     /**
      *  @OA\Property(
@@ -61,8 +61,6 @@ class Course extends Model
      */
     private $video;
 
-
-
     /**
      *  @OA\Property(
      *    title="Category",
@@ -73,7 +71,6 @@ class Course extends Model
      *  )
     */
     private $category;
-
 
     /**
      *  @OA\Property(
@@ -106,12 +103,24 @@ class Course extends Model
         'thumbnail',
         'description',
         'title',
+        'slug',
+        'sub_title',
+        'course_preview',
     ];
 
     protected $casts = [
         'video' => 'array',
         'title' => 'array',
+        'sub_title' => 'array',
     ];
 
     protected $with = ['user', 'courseEnroll'];
+
+    public function sluggable(): array {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
 }

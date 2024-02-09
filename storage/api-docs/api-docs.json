@@ -210,6 +210,17 @@
                                             "Title 1",
                                             "Title 2"
                                         ]
+                                    },
+                                    "sub_title": {
+                                        "type": "string",
+                                        "example": [
+                                            "sub title 1",
+                                            "Sub title 2"
+                                        ]
+                                    },
+                                    "course_preview": {
+                                        "type": "string",
+                                        "example": "https://res.cloudinary.com/estudy/video/upload/v1705789451/yofikr4gyecw04sp5ial.mp4"
                                     }
                                 },
                                 "type": "object"
@@ -281,13 +292,18 @@
                                                 "category": "mobile development",
                                                 "description": "estudy decription",
                                                 "thumbnail": "https://res.cloudinary.com/estudy/image/upload/v1705789451/yofikr4gyecw04sp5ial.jpg",
+                                                "course_preview": "https://res.cloudinary.com/estudy/image/upload/v1705789451/yrfikr4gyecw04sp5ial.jpg",
                                                 "video": [
-                                                    {
-                                                        "url": "https://example.com/video1.mp4"
-                                                    },
-                                                    {
-                                                        "url": "https://example.com/video2.mp4"
-                                                    }
+                                                    "https://res.cloudinary.com/estudy/video/upload/v1707148522/ukoxtqbugeyf9vt3v5mt.mp4",
+                                                    "https://res.cloudinary.com/estudy/video/upload/v1707148522/ukoxtqbugeyf9vt3v5mt.mp4"
+                                                ],
+                                                "title": [
+                                                    "title 1",
+                                                    "title 2"
+                                                ],
+                                                "sub_title": [
+                                                    "title 1",
+                                                    "title 2"
                                                 ]
                                             }
                                         }
@@ -372,7 +388,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Created courses by mentor only: (Get your videos from return payload at /courses/m/video) and (thumbnail from return payload /courses/m/thumnail)",
+                    "description": "Update Course created by mentor only: (Get your videos from return payload at /courses/m/video) and (thumbnail from return payload /courses/m/thumnail)",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -411,6 +427,17 @@
                                             "Title 1",
                                             "Title 2"
                                         ]
+                                    },
+                                    "sub_title": {
+                                        "type": "string",
+                                        "example": [
+                                            "sub title 1",
+                                            "Sub title 2"
+                                        ]
+                                    },
+                                    "course_preview": {
+                                        "type": "string",
+                                        "example": "https://res.cloudinary.com/estudy/video/upload/v1705789451/yofikr4gyecw04sp5ial.mp4"
                                     }
                                 },
                                 "type": "object"
@@ -675,7 +702,7 @@
                 "tags": [
                     "courses"
                 ],
-                "summary": "Get all courses for students dashboard",
+                "summary": "Get all courses students not enrolled in",
                 "description": "Get all courses for students dashboard",
                 "operationId": "55d8b31020ceda2c0c79d86782b96e56",
                 "responses": {
@@ -698,6 +725,10 @@
                                                         "type": "string",
                                                         "example": "intro course"
                                                     },
+                                                    "slug": {
+                                                        "type": "string",
+                                                        "example": "intro-course"
+                                                    },
                                                     "thumbnail": {
                                                         "type": "string",
                                                         "example": "https://res.cloudinary.com/estudy/image/upload/v1705789451/yofikr4gyecw04sp5ial.jpg"
@@ -707,18 +738,12 @@
                                                         "format": "currency",
                                                         "example": "20.00"
                                                     },
-                                                    "profile": {
-                                                        "$ref": "#/components/schemas/CourseProfileResource"
-                                                    },
                                                     "isEnrolled": {
                                                         "type": "boolean",
-                                                        "example": true
+                                                        "example": "false"
                                                     },
-                                                    "courseEnroll": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "$ref": "#/components/schemas/CourseEnrollResource"
-                                                        }
+                                                    "profile": {
+                                                        "$ref": "#/components/schemas/CourseProfileResource"
                                                     },
                                                     "created_at": {
                                                         "$ref": "#/components/schemas/DateTimeResource"
@@ -1106,6 +1131,64 @@
                 ]
             }
         },
+        "/user/profile/bio": {
+            "patch": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Mentor can add there bio fields",
+                "description": "Update current authenticated user bio profile",
+                "operationId": "updateUserProfilebio",
+                "requestBody": {
+                    "description": "Update user bio profile",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "occupation": {
+                                        "type": "string",
+                                        "example": "Web Developer & online instructor"
+                                    },
+                                    "bio": {
+                                        "type": "string",
+                                        "example": "I'm Gift Owens & online instructor founder of GON learning"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Your Bio has been Updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Updated successfully"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    },
+                    "401": {
+                        "description": "Unathenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
         "/user/profile/avatar": {
             "post": {
                 "tags": [
@@ -1204,26 +1287,6 @@
     },
     "components": {
         "schemas": {
-            "CourseEnrollResource": {
-                "title": "CourseEnrollResource",
-                "description": "Course students enrolled in ",
-                "properties": {
-                    "course_id": {
-                        "description": "course identifier",
-                        "type": "string",
-                        "example": "230e8400-e29b-41d4-a716-446655440000"
-                    },
-                    "user_id": {
-                        "description": "user identifier",
-                        "type": "string",
-                        "example": "660e8400-e29b-41d4-a716-156655440000"
-                    }
-                },
-                "type": "object",
-                "xml": {
-                    "name": "CourseEnrollResource"
-                }
-            },
             "CourseProfileOverviewResource": {
                 "title": "CourseProfileOverviewResource",
                 "description": "Course overview",
@@ -1513,7 +1576,7 @@
             },
             "User": {
                 "title": "User",
-                "description": "User model",
+                "description": "User model NB: (only mentor are allowed to add there bio & occupation fields, because bio, occupation won't be returned to student)",
                 "properties": {
                     "fullname": {
                         "title": "Full Name",
@@ -1578,6 +1641,17 @@
                         "description": "Avatar of the User",
                         "format": "string",
                         "example": "https://res.cloudinary.com/dbx3dhfkt/image/upload/v1672045944/estudy/pictures/image-5a9482cd3-a97e-4627-dbc3-9cb53797e40a.png"
+                    },
+                    "occupation": {
+                        "title": "Occupation",
+                        "description": "Occupation",
+                        "example": "Web Developer & online intructor"
+                    },
+                    "bio": {
+                        "title": "Bio",
+                        "description": "Bio of the User",
+                        "format": "string",
+                        "example": "I'm Gift Owens founder of GON learning"
                     }
                 },
                 "type": "object",

@@ -32,6 +32,8 @@ class CreateCourseController extends Controller
     *      @OA\Property(property="thumbnail", type="string", example="https://res.cloudinary.com/estudy/image/upload/v1705789451/yofikr4gyecw04sp5ial.png"),
     *      @OA\Property(property="description", type="string", example="estudy course description"),
     *      @OA\Property(property="title", type="string", example={"Title 1", "Title 2"}),
+    *      @OA\Property(property="sub_title", type="string", example={"sub title 1", "Sub title 2"}),
+    *      @OA\Property(property="course_preview", type="string", example="https://res.cloudinary.com/estudy/video/upload/v1705789451/yofikr4gyecw04sp5ial.mp4"),
     *   )
     *  ),
     *  @OA\Response(
@@ -57,6 +59,8 @@ class CreateCourseController extends Controller
             'thumbnail' => 'required',
             'description' => 'required|string',
             'title' => 'required|array',
+            'sub_title' => 'required|array',
+            'course_preview' => 'required'
         ]);
 
         auth()->user()->course()->create([
@@ -67,6 +71,8 @@ class CreateCourseController extends Controller
             'category' => $request->category,
             'description' => $request->description,
             'title' => $request->title,
+            'sub_title' => $request->sub_title,
+            'course_preview' => $request->course_preview
         ]);
 
         return response()->json([

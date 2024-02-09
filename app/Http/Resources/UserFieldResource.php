@@ -24,6 +24,12 @@ class UserFieldResource extends JsonResource
             'state' => $this->state,
             'zip' => $this->zip,
             'country' => $this->country,
+            'bio' => $this->when($this->role === 'mentor', function() {
+                return $this->bio;
+            }),
+            'occupation' => $this->when($this->role === 'mentor', function() {
+                return $this->occupation;
+            }),
         ];
     }
 }
