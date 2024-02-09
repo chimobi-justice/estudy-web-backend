@@ -2,8 +2,11 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Support\Str;
+use App\Models\EnrollCourse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\MentorStudentDetailsResource;
 
 /**
  * @OA\Schema(
@@ -33,8 +36,28 @@ class CourseProfileOverviewResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $course = $request->route('course');
+
         return [
-            'fullname' => $this->fullname
+            'id' => $this->id, 
+            'fullname' => $this->fullname,
+            'bio' => $this->when($request->is('api/courses/s/paid-overview/' . $course->slug), function() {
+                return $this->getBio();
+            }),
+        ];
+    }
+
+    private function getBio() {
+        $coursesCount = $this->course->count();
+
+        // $studentCount = $this->courseEnroll()->count();
+
+        return [
+           'avatar' => $this->avatar,
+           'description' => $this->bio,
+           'occupation' => $this->occupation,
+        //    'student_count' => $studentCount . ' ' . Str::plural('student', $studentCount),
+           'courses_count' => $coursesCount . ' ' .  Str::plural('course', $coursesCount), 
         ];
     }
 }

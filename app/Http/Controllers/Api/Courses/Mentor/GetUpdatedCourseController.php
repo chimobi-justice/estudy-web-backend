@@ -40,14 +40,19 @@ class GetUpdatedCourseController extends Controller
     *               "category": "mobile development",
     *               "description": "estudy decription",
     *               "thumbnail": "https://res.cloudinary.com/estudy/image/upload/v1705789451/yofikr4gyecw04sp5ial.jpg",
+    *               "course_preview": "https://res.cloudinary.com/estudy/image/upload/v1705789451/yrfikr4gyecw04sp5ial.jpg",
     *               "video": {
-    *                  {
-    *                     "url": "https://example.com/video1.mp4"
-    *                   },
-    *                   {
-    *                     "url": "https://example.com/video2.mp4"
-    *                   },
-    *                 }
+    *                  "https://res.cloudinary.com/estudy/video/upload/v1707148522/ukoxtqbugeyf9vt3v5mt.mp4",
+    *                  "https://res.cloudinary.com/estudy/video/upload/v1707148522/ukoxtqbugeyf9vt3v5mt.mp4"
+    *               },
+    *               "title": {
+    *                  "title 1",
+    *                  "title 2"
+    *               },
+    *               "sub_title": {
+    *                  "title 1",
+    *                  "title 2"
+    *               }
     *             }
     *           )
     *        )

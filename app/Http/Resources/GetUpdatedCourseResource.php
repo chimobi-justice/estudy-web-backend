@@ -21,7 +21,10 @@ class GetUpdatedCourseResource extends JsonResource
             'category' => $this->category,
             'description' => $this->description,
             'thumbnail' => $this->thumbnail,
+            'course_preview' => $this->course_preview,
             'video' => $this->video,
+            'title' => $this->title,    
+            'sub_title' => $this->sub_title,
         ];
     }
 }

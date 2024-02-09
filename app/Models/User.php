@@ -14,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 /**
  * @OA\Schema(
  *  title="User",
- *  description="User model",
+ *  description="User model NB: (only mentor are allowed to add there bio & occupation fields, because bio, occupation won't be returned to student)",
  *  @OA\Xml(
  *    name="user",
  *  )
@@ -141,6 +141,27 @@ class User extends Authenticatable implements JWTSubject
     private $avatar;
 
 
+    
+    /**
+     *  @OA\Property(
+     *    title="Occupation",
+     *    description="Occupation",
+     *    example="Web Developer & online intructor"
+     *  )
+    */
+    private $occupation;
+
+    /**
+     *  @OA\Property(
+     *    title="Bio",
+     *    description="Bio of the User",
+     *    format="string",
+     *    example="I'm Gift Owens founder of GON learning"
+     *  )
+    */
+    private $bio;
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -157,6 +178,8 @@ class User extends Authenticatable implements JWTSubject
         'zip',
         'country',
         'avatar',
+        'bio',
+        'occupation',
     ];
 
     /**
