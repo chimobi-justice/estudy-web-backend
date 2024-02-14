@@ -53,7 +53,7 @@ class CreateCourseController extends Controller
 
         $request->validate([
             'name' => 'required||string',
-            'price' => 'nullable|integer',
+            'price' => 'nullable|numeric|gt:0',
             'video' => 'required',
             'category' => 'required|string',
             'thumbnail' => 'required',
