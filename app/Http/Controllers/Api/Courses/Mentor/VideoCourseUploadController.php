@@ -17,7 +17,7 @@ class VideoCourseUploadController extends Controller
      *      description="Upload course video to cloudinary and get actual URL from response to use for course endpoint",
      *      @OA\RequestBody(
      *          required=true,
-     *          description="Video file to upload max 8 mb",
+     *          description="Video file to upload max 20 mb",
      *          @OA\MediaType(
      *              mediaType="multipart/form-data",
      *              @OA\Schema(
@@ -46,10 +46,10 @@ class VideoCourseUploadController extends Controller
     public function videoUpload(Request $request) {
         $request->validate([
             'video' => 'required',
-            'video.*' => 'mimetypes:video/avi,video/mpeg,video/mp4|max:8192',
+            'video.*' => 'mimetypes:video/avi,video/mpeg,video/mp4|max:20480',
         ], [
             'video.*.mimetypes' => 'The :attribute must be a video of type: avi, mpeg or mp4.',
-            'video.*.max' => 'The :attribute must not be greater than 8 MB.',
+            'video.*.max' => 'The :attribute must not be greater than 20 MB.',
         ]);
 
         try {
