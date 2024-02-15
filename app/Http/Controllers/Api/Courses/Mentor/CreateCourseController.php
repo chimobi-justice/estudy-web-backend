@@ -52,7 +52,7 @@ class CreateCourseController extends Controller
         $this->authorize('create', Course::class);
 
         $request->validate([
-            'name' => 'required||string',
+            'name' => 'required|string',
             'price' => 'nullable|numeric|gt:0',
             'video' => 'required',
             'category' => 'required|string',
